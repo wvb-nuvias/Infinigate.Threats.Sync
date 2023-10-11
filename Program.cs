@@ -112,7 +112,7 @@ if (json_token != null) {
 
             if (c.count > 0) {
                 if (c.items != null) {
-                    string org = "";
+                    Organisation org = null;
                     string tmp = "" ;
 
                     foreach (ThreatItem item in c.items) {
@@ -122,9 +122,11 @@ if (json_token != null) {
                             foreach (KeyValuePair<string, ThreatEntity> entry in item.entities) {
                                 ThreatEntity entity = entry.Value;
                                 entity.id = entry.Key;
-                                tmp = org + " - " + entity.type + " - " + entity.id;
+                                tmp = org.Name + " - " + entity.type + " - " + entity.id;
 
                                 if (entity.type == "firebox") tmp += " - " + entity.name;
+
+                                tmp += " [" + org.WatchguardAccount + "]";
 
                                 Console.WriteLine(tmp);
                             }
@@ -133,7 +135,7 @@ if (json_token != null) {
                         }
 
                         lastrun=item.timestamp;
-                        break;
+                        //break;
                     }    
                 }
             }

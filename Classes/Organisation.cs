@@ -116,7 +116,7 @@ namespace Infinigate.Afas.Threats.Classes
             _created_at = DateTime.Now;
             _updated_at = DateTime.Now;
             _haschanged=false;
-            _watchguardaccount = "";
+            _watchguardaccount = "You need to add link between organisation and watchguard account";
         }
 
         public Organisation(IDataRecord row) {
@@ -135,10 +135,6 @@ namespace Infinigate.Afas.Threats.Classes
 
         public string ToJSON() {
             return Newtonsoft.Json.JsonConvert.SerializeObject(this);
-        }
-
-        public override string ToString() {
-            return _name + " (" + _organisationid + ")";
         }
     }
 }

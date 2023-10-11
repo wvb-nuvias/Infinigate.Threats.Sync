@@ -47,7 +47,7 @@ namespace Infinigate.Afas.Threats.Classes
             return System.Convert.ToBase64String(plainTextBytes);
         }
 
-        public static string GetOrganisation(string? WatchguardAccount, MySqlConnection conn) {            
+        public static Organisation GetOrganisation(string? WatchguardAccount, MySqlConnection conn) {            
             Organisation org = new();
             MySqlCommand? cmd;
             MySqlDataReader? reader;
@@ -61,13 +61,13 @@ namespace Infinigate.Afas.Threats.Classes
                 if (reader.HasRows) {                        
                     reader.Read();   
                     
-                    org = new((IDataRecord)reader);
-                    
-                    reader.Close();
+                    org = new((IDataRecord)reader);                    
                 }
+
+                reader.Close();
             }            
             
-            return org.ToString();
+            return org;
         }
     }
 }
