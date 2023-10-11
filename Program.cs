@@ -1,11 +1,14 @@
-﻿//title           :Infinigate.Afas.Sync
-//description     :This dotnet app imports the necessary data from Afas
+﻿using System.Data.Common;
+//title           :Infinigate.Threats.Sync
+//description     :This dotnet app Syncs threats from Watchguard Cloud and creates incidents when necessary
 //author          :Wouter Vanbelleghem<wouter.vanbelleghem@infinigate.com>
-//date            :08/06/2023
+//date            :11/10/2023
 //version         :0.1
-//usage           :Infinigate.Afas.Sync or dotnet run in folder
+//usage           :Infinigate.Threats.Sync or dotnet run in folder
 //==============================================================================
 
+using System.Security.AccessControl;
+using System.Runtime.Serialization;
 using System.Net.WebSockets;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,30 +23,124 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 using SharpConfig;
 using TeamsHook.NET;
+using Newtonsoft.Json;
+using Infinigate.Afas.Threats.Classes;
 
 MySqlConnection conn;
 MySqlCommand cmd;
 long elapsedMs=0;
 
 string homepath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-string configfile = homepath + "/.Infinigate.Afas.Sync";
+string configfile = homepath + "/.Infinigate.Threats.Sync";
 var config = Configuration.LoadFromFile(configfile);
-var section = config["MySql"];
 
+var section = config["General"];
+string cache_path = section["cache_path"].StringValue + "/watchguard_threats_cache";
+string lastrun_path = section["cache_path"].StringValue + "/watchguard_threats_lastrun";
+string min_threat_level = section["min_threat_level"].StringValue;
+
+section = config["MySql"];
 string mysql_pass = section["mysql_pass"].StringValue;
 string mysql_host = section["mysql_host"].StringValue;
 string mysql_base = section["mysql_base"].StringValue;
 string mysql_user = section["mysql_user"].StringValue;
 
 section = config["Teams"];
-string teams_webhook_url = section["webhook_url_sync"].StringValue;
+string teams_webhook_url = section["webhook_url_threats"].StringValue;
 
-//prereq = date of today, and last run date (read from file somewhere?)
-//use Watchguard API on our account to check for threats-number with level > 4 (or configged level) 
-//if number greater then zero, download the json of all 
-//for each one of them determine customer
-//for each one create an incident using - same method as the portal uses? / or do it seperate
-//if other method as portal create incident, send a teams webhook; alerting of the new incident
+section = config["Watchguard"];
+string api_user =  section["api_user"].StringValue;
+string api_pass =  section["api_pass"].StringValue;
+string api_account =  section["api_account"].StringValue;
+string api_auth =  section["api_auth"].StringValue;
+string api_base =  section["api_base"].StringValue;
+string api_key =   section["api_key"].StringValue;
+string api_scope = section["api_scope"].StringValue;
 
+var watch = System.Diagnostics.Stopwatch.StartNew();
 
+string connstring = "Server=" + mysql_host + ";Database=" + mysql_base + ";Uid=" + mysql_user + ";Pwd=" + mysql_pass + ";SslMode=none;convert zero datetime=True";
 
+Console.WriteLine("Connecting to MySql...");
+try {
+    conn = new MySqlConnection(connstring);
+    conn.Open();
+} catch (Exception ex) {
+    Console.WriteLine("MySql Connect Exception: " + ex.Message);
+    return;
+}
+
+string lastrun = "";
+if (System.IO.File.Exists(lastrun_path)) {
+    lastrun = System.IO.File.ReadAllText(lastrun_path);
+}
+
+Console.WriteLine("Get Watchguard API Token...");
+var client = new HttpClient();
+var request = new HttpRequestMessage(HttpMethod.Post, api_auth);
+
+var base64=Functions.Base64Encode(api_user + ":" + api_pass);
+request.Headers.Add("Authorization", "Basic " + base64);
+var collection = new List<KeyValuePair<string, string>>();
+collection.Add(new("grant_type", "client_credentials"));
+collection.Add(new("scope", api_scope));
+var content = new FormUrlEncodedContent(collection);
+request.Content = content;
+var response = await client.SendAsync(request);
+response.EnsureSuccessStatusCode();
+var json_token=await response.Content.ReadAsStringAsync();
+
+OAuthResponse o = JsonConvert.DeserializeObject<OAuthResponse>(json_token);
+
+Console.WriteLine("Counting number of Incidents...");
+
+//TODO : take into account lastrun
+request = new HttpRequestMessage(HttpMethod.Get, api_base + "threatsync/management/v1/" + api_account + "/incidents?countOnly=true&query=threatScore:>" + min_threat_level);
+request.Headers.Add("Accept", "application/json");
+request.Headers.Add("Watchguard-Api-Key", api_key);
+request.Headers.Add("Authorization", "Bearer " + o.access_token);
+response = await client.SendAsync(request);
+response.EnsureSuccessStatusCode();
+
+var json_count=await response.Content.ReadAsStringAsync();
+
+CountResponse c = JsonConvert.DeserializeObject<CountResponse>(json_count);
+Console.WriteLine("" + c.count + " Incidents found." );
+
+if (c.count > 0) {
+    //sortBy=timestamp
+    //startAfter=lastrun //if empty then do not use startAfter
+
+    //download the json of all 
+    //json to Threatsresponse?
+    
+    //for each ThreatItem    
+
+    //for each one create an incident using - same method as the portal uses? / or do it seperate
+    //if other method as portal create incident, send a teams webhook; alerting of the new incident
+
+    //lastrun=ThreatItem.timestamp;
+}
+
+conn.Close();
+
+//lastrun=DateTime.Now.ToString();
+
+System.IO.File.WriteAllText(lastrun_path,lastrun);
+
+watch.Stop();
+elapsedMs = watch.ElapsedMilliseconds;
+TimeSpan t = TimeSpan.FromMilliseconds(elapsedMs);
+
+Console.WriteLine("Done Syncronizing.  MySql Connection Closed.");
+Console.WriteLine("In Total, it took " + t.ToString(@"hh\:mm\:ss\:fff"));
+
+bool sendTeams = false;
+
+if (sendTeams) {
+    var tclient = new TeamsHookClient();
+    var card = new MessageCard();
+    card.Title="Threats Sync to Beneluxportal done.";
+    card.Text="Threats are synced, incidents created where necessary.\n It took " + t.ToString(@"hh\:mm\:ss\:fff");
+    await tclient.PostAsync(teams_webhook_url, card);
+}

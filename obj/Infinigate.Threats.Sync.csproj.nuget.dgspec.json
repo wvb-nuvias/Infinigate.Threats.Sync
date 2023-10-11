@@ -37,6 +37,28 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
+          "dependencies": {
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[8.0.33, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
+            "RestSharp": {
+              "target": "Package",
+              "version": "[110.2.0, )"
+            },
+            "SharpConfig": {
+              "target": "Package",
+              "version": "[3.2.9.1, )"
+            },
+            "TeamsHook.NET": {
+              "target": "Package",
+              "version": "[0.1.0.18, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

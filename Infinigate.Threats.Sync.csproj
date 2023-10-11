@@ -7,4 +7,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>  
+    <PackageReference Include="MySql.Data" Version="8.0.33" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="RestSharp" Version="110.2.0" />
+    <PackageReference Include="SharpConfig" Version="3.2.9.1" />
+    <PackageReference Include="TeamsHook.NET" Version="0.1.0.18" />
+  </ItemGroup>
+
 </Project>

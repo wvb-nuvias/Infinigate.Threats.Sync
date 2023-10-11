@@ -1,0 +1,551 @@
+{
+    "items": [
+        {
+            "id": "cg9it3t5kl4b9noe0ug0",
+            "account": "ACC-0166438",
+            "category": "malware",
+            "type": "APT",
+            "timestamp": "2023-03-16T14:58:23Z",
+            "threatScore": 6,
+            "severity": "Medium",
+            "description": null,
+            "remediated": false,
+            "entities": {
+                "319988": {
+                    "type": "firebox",
+                    "name": "DCB_1100_upper",
+                    "recommendedActions": [
+                        {
+                            "command": "blockAddress",
+                            "parameters": {
+                                "address": "149.81.174.168"
+                            }
+                        }
+                    ],
+                    "threatDetails": {
+                        "path": "/DocumentFeed/Document/433216a2-961b-4e22-b95d-0b7b337dd8b8",
+                        "proxyAction": "HTTP-Client-Standaard",
+                        "md5": "23ae72701db6392ce5685ee44cdc21d7",
+                        "protocol": "https",
+                        "dstAddr": "149.81.174.168",
+                        "dstInterface": "Telenet",
+                        "maliciousIp": "149.81.174.168",
+                        "srcAddr": "172.20.97.21",
+                        "policy": "HTTPS-proxy-DPI-Out-00",
+                        "srcInterface": "DS Workstations",
+                        "srcPort": 52523,
+                        "connectionTime": "2023-03-16T14:45:56Z",
+                        "location": "USA",
+                        "dstPort": 443
+                    }
+                }
+            },
+            "entityIds": [
+                "319988"
+            ],
+            "status": "viewed",
+            "lastUpdateTime": "2023-04-03T06:27:47Z",
+            "updatedBy": "vastenavondt"
+        },
+        {
+            "id": "cg9iti55kl4b9noe0v7g",
+            "account": "ACC-0166438",
+            "category": "malware",
+            "type": "APT",
+            "timestamp": "2023-03-16T14:59:20Z",
+            "threatScore": 6,
+            "severity": "Medium",
+            "description": null,
+            "remediated": false,
+            "entities": {
+                "319988": {
+                    "type": "firebox",
+                    "name": "DCB_1100_upper",
+                    "recommendedActions": [
+                        {
+                            "command": "blockAddress",
+                            "parameters": {
+                                "address": "149.81.174.168"
+                            }
+                        }
+                    ],
+                    "threatDetails": {
+                        "path": "/DocumentFeed/Document/5ff49780-6153-4aa0-aa4f-8be64c265030",
+                        "proxyAction": "HTTP-Client-Standaard",
+                        "md5": "cd53d2ecce05e3635d633bdfbebf4665",
+                        "protocol": "https",
+                        "dstAddr": "149.81.174.168",
+                        "dstInterface": "Telenet",
+                        "maliciousIp": "149.81.174.168",
+                        "srcAddr": "172.20.97.21",
+                        "policy": "HTTPS-proxy-DPI-Out-00",
+                        "srcInterface": "DS Workstations",
+                        "srcPort": 52523,
+                        "connectionTime": "2023-03-16T14:47:07Z",
+                        "location": "USA",
+                        "dstPort": 443
+                    }
+                }
+            },
+            "entityIds": [
+                "319988"
+            ],
+            "status": "viewed",
+            "lastUpdateTime": "2023-03-16T15:32:00Z"
+        },
+        {
+            "id": "cg9iv4l5kl4b9noe1250",
+            "account": "ACC-0166438",
+            "category": "malware",
+            "type": "APT",
+            "timestamp": "2023-03-16T15:02:42Z",
+            "threatScore": 6,
+            "severity": "Medium",
+            "description": null,
+            "remediated": false,
+            "entities": {
+                "319988": {
+                    "type": "firebox",
+                    "name": "DCB_1100_upper",
+                    "recommendedActions": [
+                        {
+                            "command": "blockAddress",
+                            "parameters": {
+                                "address": "149.81.174.168"
+                            }
+                        }
+                    ],
+                    "threatDetails": {
+                        "path": "/DocumentFeed/Document/74bbbf0d-d1dc-438b-9bb6-4ba391446509",
+                        "proxyAction": "HTTP-Client-Standaard",
+                        "md5": "a3c244914a8031a94e045c798eead601",
+                        "protocol": "https",
+                        "dstAddr": "149.81.174.168",
+                        "dstInterface": "Telenet",
+                        "maliciousIp": "149.81.174.168",
+                        "srcAddr": "172.20.97.21",
+                        "policy": "HTTPS-proxy-DPI-Out-00",
+                        "srcInterface": "DS Workstations",
+                        "srcPort": 52559,
+                        "connectionTime": "2023-03-16T14:49:39Z",
+                        "location": "USA",
+                        "dstPort": 443
+                    }
+                }
+            },
+            "entityIds": [
+                "319988"
+            ],
+            "status": "viewed",
+            "lastUpdateTime": "2023-03-17T07:36:02Z"
+        },
+        {
+            "id": "cgn6n2htjtqkt1173dbg",
+            "account": "ACC-0166438",
+            "category": "malware",
+            "type": "EICAR-AV-TEST-FILE",
+            "timestamp": "2023-04-06T06:49:40Z",
+            "threatScore": 5,
+            "severity": "Medium",
+            "description": null,
+            "remediated": false,
+            "entities": {
+                "b40155155e6b485bA20a3bf0134d71ba": {
+                    "type": "endpoint",
+                    "recommendedActions": [
+                        {
+                            "command": "isolate"
+                        }
+                    ],
+                    "actionPerformed": {
+                        "command": "blockProcess",
+                        "parameters": {
+                            "md5": "44D88612FEA8A8F36DE82E1278ABB02F"
+                        }
+                    },
+                    "threatDetails": {
+                        "malware": "EICAR-AV-TEST-FILE",
+                        "file": "TEMP|\\7zO4E014FA6\\eicar.com",
+                        "md5": "44D88612FEA8A8F36DE82E1278ABB02F"
+                    }
+                }
+            },
+            "entityIds": [
+                "b4015515-5e6b-485b-a20a-3bf0134d71ba"
+            ],
+            "status": "viewed",
+            "lastUpdateTime": "2023-04-06T07:17:33Z",
+            "updatedBy": "vastenavondt"
+        },
+        {
+            "id": "cgn6soptjtqkt1176ihg",
+            "account": "ACC-0166438",
+            "category": "malware",
+            "type": "EICAR-AV-TEST-FILE",
+            "timestamp": "2023-04-06T07:01:50Z",
+            "threatScore": 5,
+            "severity": "Medium",
+            "description": null,
+            "remediated": false,
+            "entities": {
+                "b40155155e6b485bA20a3bf0134d71ba": {
+                    "type": "endpoint",
+                    "recommendedActions": [
+                        {
+                            "command": "isolate"
+                        }
+                    ],
+                    "actionPerformed": {
+                        "command": "blockProcess",
+                        "parameters": {
+                            "md5": "44D88612FEA8A8F36DE82E1278ABB02F"
+                        }
+                    },
+                    "threatDetails": {
+                        "malware": "EICAR-AV-TEST-FILE",
+                        "file": "PROFILE|\\Downloads\\eicar.com",
+                        "md5": "44D88612FEA8A8F36DE82E1278ABB02F"
+                    }
+                }
+            },
+            "entityIds": [
+                "b4015515-5e6b-485b-a20a-3bf0134d71ba"
+            ],
+            "status": "new"
+        },
+        {
+            "id": "cgn8eh1tjtqkt1181r40",
+            "account": "ACC-0166438",
+            "category": "malware",
+            "type": "EICAR-AV-TEST-FILE",
+            "timestamp": "2023-04-06T08:33:42Z",
+            "threatScore": 5,
+            "severity": "Medium",
+            "description": null,
+            "remediated": false,
+            "entities": {
+                "035ea4bf432248ec8e50011126c86024": {
+                    "type": "endpoint",
+                    "recommendedActions": [
+                        {
+                            "command": "isolate"
+                        },
+                        {
+                            "command": "quarantineFile",
+                            "parameters": {
+                                "md5": "44D88612FEA8A8F36DE82E1278ABB02F"
+                            }
+                        }
+                    ],
+                    "actionPerformed": {
+                        "command": "deleteFile",
+                        "parameters": {
+                            "md5": "44D88612FEA8A8F36DE82E1278ABB02F"
+                        }
+                    },
+                    "threatDetails": {
+                        "malware": "EICAR-AV-TEST-FILE",
+                        "file": "PROFILE|\\Downloads\\eicar.com",
+                        "md5": "44D88612FEA8A8F36DE82E1278ABB02F"
+                    }
+                }
+            },
+            "entityIds": [
+                "035ea4bf-4322-48ec-8e50-011126c86024"
+            ],
+            "status": "new"
+        },
+        {
+            "id": "cgnctfptjtqkt11ahd80",
+            "account": "ACC-0166438",
+            "category": "malware",
+            "type": "EICAR-AV-TEST-FILE",
+            "timestamp": "2023-04-06T13:38:01Z",
+            "threatScore": 5,
+            "severity": "Medium",
+            "description": null,
+            "remediated": false,
+            "entities": {
+                "a2f3f8608d1c4f8cA57f190e47e5a621": {
+                    "type": "endpoint",
+                    "actionPerformed": {
+                        "command": "deleteFile",
+                        "parameters": {
+                            "md5": "44D88612FEA8A8F36DE82E1278ABB02F"
+                        }
+                    },
+                    "threatDetails": {
+                        "malware": "EICAR-AV-TEST-FILE",
+                        "file": null,
+                        "md5": "44D88612FEA8A8F36DE82E1278ABB02F"
+                    }
+                }
+            },
+            "entityIds": [
+                "a2f3f860-8d1c-4f8c-a57f-190e47e5a621"
+            ],
+            "status": "new"
+        },
+        {
+            "id": "cgncvr1tjtqkt11aiotg",
+            "account": "ACC-0166438",
+            "category": "malware",
+            "type": "EICAR-AV-TEST-FILE",
+            "timestamp": "2023-04-06T13:43:20Z",
+            "threatScore": 5,
+            "severity": "Medium",
+            "description": null,
+            "remediated": false,
+            "entities": {
+                "ebba06a45c404ca2Bd43184b6ceaba4f": {
+                    "type": "endpoint",
+                    "actionPerformed": {
+                        "command": "deleteFile",
+                        "parameters": {
+                            "md5": "44D88612FEA8A8F36DE82E1278ABB02F"
+                        }
+                    },
+                    "threatDetails": {
+                        "malware": "EICAR-AV-TEST-FILE",
+                        "file": null,
+                        "md5": "44D88612FEA8A8F36DE82E1278ABB02F"
+                    }
+                }
+            },
+            "entityIds": [
+                "ebba06a4-5c40-4ca2-bd43-184b6ceaba4f"
+            ],
+            "status": "viewed",
+            "lastUpdateTime": "2023-04-07T07:57:12Z",
+            "updatedBy": "vastenavondt"
+        },
+        {
+            "id": "cgnd1n1tjtqkt11ajrk0",
+            "account": "ACC-0166438",
+            "category": "malware",
+            "type": "EICAR-AV-TEST-FILE",
+            "timestamp": "2023-04-06T13:47:51Z",
+            "threatScore": 5,
+            "severity": "Medium",
+            "description": null,
+            "remediated": false,
+            "entities": {
+                "a2f3f8608d1c4f8cA57f190e47e5a621": {
+                    "type": "endpoint",
+                    "actionPerformed": {
+                        "command": "deleteFile",
+                        "parameters": {
+                            "md5": "44D88612FEA8A8F36DE82E1278ABB02F"
+                        }
+                    },
+                    "threatDetails": {
+                        "malware": "EICAR-AV-TEST-FILE",
+                        "file": null,
+                        "md5": "44D88612FEA8A8F36DE82E1278ABB02F"
+                    }
+                }
+            },
+            "entityIds": [
+                "a2f3f860-8d1c-4f8c-a57f-190e47e5a621"
+            ],
+            "status": "new"
+        },
+        {
+            "id": "cgnru6ptjtqkt11j3le0",
+            "account": "ACC-0166438",
+            "category": "malware",
+            "type": "EICAR-AV-TEST-FILE",
+            "timestamp": "2023-04-07T06:58:31Z",
+            "threatScore": 5,
+            "severity": "Medium",
+            "description": null,
+            "remediated": false,
+            "entities": {
+                "b40155155e6b485bA20a3bf0134d71ba": {
+                    "type": "endpoint",
+                    "recommendedActions": [
+                        {
+                            "command": "isolate"
+                        }
+                    ],
+                    "actionPerformed": {
+                        "command": "blockProcess",
+                        "parameters": {
+                            "md5": "44D88612FEA8A8F36DE82E1278ABB02F"
+                        }
+                    },
+                    "threatDetails": {
+                        "malware": "EICAR-AV-TEST-FILE",
+                        "file": "TEMP|\\7zO8C4D733B\\eicar.com",
+                        "md5": "44D88612FEA8A8F36DE82E1278ABB02F"
+                    }
+                }
+            },
+            "entityIds": [
+                "b4015515-5e6b-485b-a20a-3bf0134d71ba"
+            ],
+            "status": "viewed",
+            "lastUpdateTime": "2023-04-07T07:04:03Z",
+            "updatedBy": "vastenavondt"
+        },
+        {
+            "id": "chi6njdt32vrr5apmjq0",
+            "account": "ACC-0166438",
+            "category": "malware",
+            "type": "EICAR-AV-TEST-FILE",
+            "timestamp": "2023-05-17T05:53:10Z",
+            "threatScore": 5,
+            "severity": "Medium",
+            "description": "File was detected as malware by local or remote technology in WatchGuard Endpoint Security",
+            "remediated": false,
+            "entities": {
+                "035ea4bf432248ec8e50011126c86024": {
+                    "type": "endpoint",
+                    "recommendedActions": [
+                        {
+                            "command": "isolate"
+                        },
+                        {
+                            "command": "quarantineFile",
+                            "parameters": {
+                                "md5": "44D88612FEA8A8F36DE82E1278ABB02F"
+                            }
+                        }
+                    ],
+                    "actionPerformed": {
+                        "command": "deleteFile",
+                        "parameters": {
+                            "md5": "44D88612FEA8A8F36DE82E1278ABB02F"
+                        }
+                    },
+                    "threatDetails": {
+                        "malware": "EICAR-AV-TEST-FILE",
+                        "file": "SYSTEMDRIVE|\\Users\\koen\\Downloads\\eicar_com.zip[eicar.com]",
+                        "md5": "44D88612FEA8A8F36DE82E1278ABB02F"
+                    }
+                }
+            },
+            "entityIds": [
+                "035ea4bf-4322-48ec-8e50-011126c86024"
+            ],
+            "status": "new"
+        },
+        {
+            "id": "ck4lb9is7vigg69pfkk0",
+            "account": "ACC-0166438",
+            "category": "unknown-program",
+            "type": "Unknown programs detected : ",
+            "timestamp": "2023-09-19T08:02:41Z",
+            "threatScore": 5,
+            "severity": "Medium",
+            "description": null,
+            "remediated": false,
+            "entities": {
+                "c01115fc50a04a6586bc6036f945b18a": {
+                    "type": "endpoint",
+                    "recommendedActions": [
+                        {
+                            "command": "isolate"
+                        }
+                    ],
+                    "actionPerformed": {
+                        "command": "blockProcess",
+                        "parameters": {
+                            "md5": "21B8727F38E1F7A3BCE2FDD5B5107D00"
+                        }
+                    },
+                    "threatDetails": {
+                        "exploit": "",
+                        "file": "PROGRAM_FILES_COMMONX86|\\WatchGuard\\resources\\FirewareXTM\\12.10\\M590_M690\\unins000.exe",
+                        "md5": "21B8727F38E1F7A3BCE2FDD5B5107D00"
+                    }
+                }
+            },
+            "entityIds": [
+                "c01115fc-50a0-4a65-86bc-6036f945b18a"
+            ],
+            "status": "viewed",
+            "lastUpdateTime": "2023-09-22T06:34:27Z",
+            "updatedBy": "vastenavondt"
+        },
+        {
+            "id": "cka3fohaknq729jkmdsg",
+            "account": "ACC-0166438",
+            "category": "malware",
+            "type": "EICAR-AV-TEST-FILE",
+            "timestamp": "2023-09-27T14:09:42Z",
+            "threatScore": 5,
+            "severity": "Medium",
+            "description": "File was detected as malware by local or remote technology in WatchGuard Endpoint Security.",
+            "remediated": false,
+            "entities": {
+                "b40155155e6b485bA20a3bf0134d71ba": {
+                    "type": "endpoint",
+                    "recommendedActions": [
+                        {
+                            "command": "isolate"
+                        }
+                    ],
+                    "actionPerformed": {
+                        "command": "blockProcess",
+                        "parameters": {
+                            "md5": "44D88612FEA8A8F36DE82E1278ABB02F"
+                        }
+                    },
+                    "threatDetails": {
+                        "malware": "EICAR-AV-TEST-FILE",
+                        "file": "TEMP|\\7zO0DA7053E\\eicar.com",
+                        "md5": "44D88612FEA8A8F36DE82E1278ABB02F"
+                    }
+                }
+            },
+            "entityIds": [
+                "b4015515-5e6b-485b-a20a-3bf0134d71ba"
+            ],
+            "status": "new"
+        },
+        {
+            "id": "cka3gbhaknq729jkngs0",
+            "account": "ACC-0166438",
+            "category": "malware",
+            "type": "Trj/Agent.MK",
+            "timestamp": "2023-09-27T14:10:40Z",
+            "threatScore": 5,
+            "severity": "Medium",
+            "description": "File was detected as malware by local or remote technology in WatchGuard Endpoint Security.",
+            "remediated": false,
+            "entities": {
+                "b40155155e6b485bA20a3bf0134d71ba": {
+                    "type": "endpoint",
+                    "recommendedActions": [
+                        {
+                            "command": "isolate"
+                        },
+                        {
+                            "command": "quarantineFile",
+                            "parameters": {
+                                "md5": "DD0AF53FEC2267757CD90D633ACD549A"
+                            }
+                        }
+                    ],
+                    "actionPerformed": {
+                        "command": "deleteFile",
+                        "parameters": {
+                            "md5": "DD0AF53FEC2267757CD90D633ACD549A"
+                        }
+                    },
+                    "threatDetails": {
+                        "malware": "Trj/Agent.MK",
+                        "file": "PROFILE|\\Downloads\\lastline-demo-sample.exe",
+                        "md5": "DD0AF53FEC2267757CD90D633ACD549A"
+                    }
+                }
+            },
+            "entityIds": [
+                "b4015515-5e6b-485b-a20a-3bf0134d71ba"
+            ],
+            "status": "new"
+        }
+    ],
+    "count": 14
+}
