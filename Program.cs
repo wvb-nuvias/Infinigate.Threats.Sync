@@ -114,6 +114,7 @@ if (json_token != null) {
             if (c.count > 0) {
                 if (c.items != null) {
                     string org = "";
+                    string tmp = "" ;
 
                     foreach (ThreatItem item in c.items) {
                         org = Functions.GetOrganisation(item.account,conn);                        
@@ -122,9 +123,11 @@ if (json_token != null) {
                             foreach (KeyValuePair<string, ThreatEntity> entry in item.entities) {
                                 ThreatEntity entity = entry.Value;
                                 entity.id = entry.Key;
+                                tmp = org + " - " + entity.type + " - " + entity.id;
 
-                                //TODO entity.type =endpoint, then no entity.name
-                                Console.WriteLine(org + " - " + entity.id + " - " + entity.name);
+                                if (entity.type == "firebox") tmp += " - " + entity.name;
+
+                                Console.WriteLine(tmp);
                             }
                             //for each one create an incident using - same method as the portal uses? / or do it seperate
                             //if other method as portal create incident, send a teams webhook; alerting of the new incident
