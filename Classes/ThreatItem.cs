@@ -11,7 +11,7 @@ namespace Infinigate.Afas.Threats.Classes
         public string? severity { get; set; }
         public string? description { get; set; }
         public bool? remediated { get; set; }
-        public Dictionary<string, ThreatEntity> entities { get; set; }
+        public Dictionary<string, ThreatEntity>? entities { get; set; }
         public List<string>? entityIds { get; set; }
         public string? status { get; set; }
         public string? lastUpdateTime { get; set; }

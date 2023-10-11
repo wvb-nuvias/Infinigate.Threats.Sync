@@ -1,4 +1,5 @@
-﻿//title           :Infinigate.Threats.Sync
+﻿using System.Runtime.CompilerServices;
+//title           :Infinigate.Threats.Sync
 //description     :This dotnet app Syncs threats from Watchguard Cloud and creates incidents when necessary
 //author          :Wouter Vanbelleghem<wouter.vanbelleghem@infinigate.com>
 //date            :11/10/2023
@@ -26,7 +27,7 @@ using Newtonsoft.Json;
 using Infinigate.Afas.Threats.Classes;
 
 MySqlConnection conn;
-MySqlCommand cmd;
+//MySqlCommand cmd;
 long elapsedMs=0;
 
 string homepath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
@@ -69,8 +70,8 @@ try {
     return;
 }
 
-string startAfter = "";
-string lastrun = "";
+string? startAfter = "";
+string? lastrun = "";
 if (System.IO.File.Exists(lastrun_path)) {
     lastrun = System.IO.File.ReadAllText(lastrun_path);    
     startAfter = "&startAfter=" + lastrun;
@@ -91,37 +92,49 @@ var response = await client.SendAsync(request);
 response.EnsureSuccessStatusCode();
 var json_token=await response.Content.ReadAsStringAsync();
 
-OAuthResponse o = JsonConvert.DeserializeObject<OAuthResponse>(json_token);
+if (json_token != null) {
+    OAuthResponse? o = JsonConvert.DeserializeObject<OAuthResponse>(json_token);
 
-Console.WriteLine("Counting number of Incidents...");
+    if (o != null) {
+        Console.WriteLine("Counting number of Incidents...");
 
-request = new HttpRequestMessage(HttpMethod.Get, api_base + "threatsync/management/v1/" + api_account + "/incidents?tenants=true&sortBy=timestamp&query=threatScore:>" + min_threat_level + startAfter);
-request.Headers.Add("Accept", "application/json");
-request.Headers.Add("Watchguard-Api-Key", api_key);
-request.Headers.Add("Authorization", "Bearer " + o.access_token);
-response = await client.SendAsync(request);
-response.EnsureSuccessStatusCode();
+        request = new HttpRequestMessage(HttpMethod.Get, api_base + "threatsync/management/v1/" + api_account + "/incidents?tenants=true&sortBy=timestamp&query=threatScore:>" + min_threat_level + startAfter);
+        request.Headers.Add("Accept", "application/json");
+        request.Headers.Add("Watchguard-Api-Key", api_key);
+        request.Headers.Add("Authorization", "Bearer " + o.access_token);
+        response = await client.SendAsync(request);
+        response.EnsureSuccessStatusCode();
 
-var json_reponse=await response.Content.ReadAsStringAsync();
+        var json_reponse=await response.Content.ReadAsStringAsync();
 
-ThreatsResponse c = JsonConvert.DeserializeObject<ThreatsResponse>(json_reponse);
-Console.WriteLine("" + c.count + " Incidents found." );
+        ThreatsResponse? c = JsonConvert.DeserializeObject<ThreatsResponse>(json_reponse);
 
-if (c.count > 0) {
-    foreach (ThreatItem item in c.items) {
-        Console.WriteLine(item.id);
+        if (c != null) {        
+            Console.WriteLine("" + c.count + " Incidents found." );
 
-        foreach (KeyValuePair<string, ThreatEntity> entry in item.entities) {
-            ThreatEntity entity = entry.Value;
+            if (c.count > 0) {
+                if (c.items != null) {
+                    foreach (ThreatItem item in c.items) {
+                        Console.WriteLine(item.id);
 
-            Console.WriteLine(entity.name);
+                        if (item.entities != null) {
+                            foreach (KeyValuePair<string, ThreatEntity> entry in item.entities) {
+                                ThreatEntity entity = entry.Value;
+                                entity.id = entry.Key;
+
+                                Console.WriteLine(entity.id + " - " + entity.name);
+                            }
+                            //for each one create an incident using - same method as the portal uses? / or do it seperate
+                            //if other method as portal create incident, send a teams webhook; alerting of the new incident
+                        }
+
+                        lastrun=item.timestamp;
+                        break;
+                    }    
+                }
+            }
         }
-        //for each one create an incident using - same method as the portal uses? / or do it seperate
-        //if other method as portal create incident, send a teams webhook; alerting of the new incident
-
-        lastrun=item.timestamp;
-        break;
-    }    
+    }
 }
 
 conn.Close();
