@@ -26,7 +26,6 @@ using Newtonsoft.Json;
 using Infinigate.Afas.Threats.Classes;
 
 MySqlConnection conn;
-//MySqlCommand cmd;
 long elapsedMs=0;
 
 string homepath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);

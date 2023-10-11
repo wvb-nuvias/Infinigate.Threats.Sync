@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+using System;
 using System.Data;
 using MySql.Data;
 using MySql.Data.MySqlClient;
@@ -28,6 +30,17 @@ namespace Infinigate.Afas.Threats.Classes
             return tmp;
         }
 
+        public static DateTime GetDateTime(object? obj) {
+            DateTime tmp=DateTime.Now;
+            if (obj != null) {
+                string? stmp= obj.ToString();
+                if (stmp != null) {
+                    tmp = DateTime.Parse(stmp);
+                }                
+            }
+            return tmp;
+        }
+
         public static string Base64Encode(string plainText) 
         {
             var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
@@ -40,7 +53,7 @@ namespace Infinigate.Afas.Threats.Classes
             MySqlDataReader? reader;
 
             if (WatchguardAccount != null) {
-                string sql = "SELECT organisationid,name FROM incidents.watchguardaccount_organisation LEFT JOIN incidents.organisations ON organisation=organisationid WHERE watchguardaccount='" + WatchguardAccount + "'";
+                string sql = "SELECT organisationid,name,address1,address2,address3,created_at,updated_at,watchguardaccount FROM incidents.watchguardaccount_organisation LEFT JOIN incidents.organisations ON organisation=organisationid WHERE watchguardaccount='" + WatchguardAccount + "'";
                 
                 cmd = new(sql,conn);
                 reader = cmd.ExecuteReader();

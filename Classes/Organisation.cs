@@ -1,3 +1,4 @@
+using System;
 using System.Data;
 
 namespace Infinigate.Afas.Threats.Classes
@@ -81,6 +82,17 @@ namespace Infinigate.Afas.Threats.Classes
             }
         }
 
+        private string _watchguardaccount="";
+        public string WatchguardAccount {
+            get {
+                return _watchguardaccount;
+            }
+            set {
+                _watchguardaccount=value;
+                Changed();
+            }
+        }
+
         private bool _haschanged = false;
         public bool Haschanged {
             get {
@@ -98,16 +110,26 @@ namespace Infinigate.Afas.Threats.Classes
         public Organisation() {
             _organisationid = 1000051;
             _name = "Nuvias BV (BE)";
-
+            _address1 = "";
+            _address2 = "";
+            _address3 = "";
+            _created_at = DateTime.Now;
+            _updated_at = DateTime.Now;
             _haschanged=false;
+            _watchguardaccount = "";
         }
 
         public Organisation(IDataRecord row) {
             if (row != null) {
                 _organisationid = Functions.GetInt(row[0]);
                 _name = Functions.GetString(row[1]);
-            }            
-
+                _address1 = Functions.GetString(row[2]);
+                _address2 = Functions.GetString(row[3]);
+                _address3 = Functions.GetString(row[4]);
+                _created_at = Functions.GetDateTime(row[5]);
+                _updated_at = Functions.GetDateTime(row[6]);
+                _watchguardaccount = Functions.GetString(row[7]);
+            }
             _haschanged=false;
         }
 
