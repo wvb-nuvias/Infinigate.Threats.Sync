@@ -1,5 +1,4 @@
-﻿using System.Data.Common;
-//title           :Infinigate.Threats.Sync
+﻿//title           :Infinigate.Threats.Sync
 //description     :This dotnet app Syncs threats from Watchguard Cloud and creates incidents when necessary
 //author          :Wouter Vanbelleghem<wouter.vanbelleghem@infinigate.com>
 //date            :11/10/2023
@@ -70,9 +69,11 @@ try {
     return;
 }
 
+string startAfter = "";
 string lastrun = "";
 if (System.IO.File.Exists(lastrun_path)) {
-    lastrun = System.IO.File.ReadAllText(lastrun_path);
+    lastrun = System.IO.File.ReadAllText(lastrun_path);    
+    startAfter = "&startAfter=" + lastrun;
 }
 
 Console.WriteLine("Get Watchguard API Token...");
@@ -94,37 +95,36 @@ OAuthResponse o = JsonConvert.DeserializeObject<OAuthResponse>(json_token);
 
 Console.WriteLine("Counting number of Incidents...");
 
-//TODO : take into account lastrun
-request = new HttpRequestMessage(HttpMethod.Get, api_base + "threatsync/management/v1/" + api_account + "/incidents?countOnly=true&query=threatScore:>" + min_threat_level);
+request = new HttpRequestMessage(HttpMethod.Get, api_base + "threatsync/management/v1/" + api_account + "/incidents?tenants=true&sortBy=timestamp&query=threatScore:>" + min_threat_level + startAfter);
 request.Headers.Add("Accept", "application/json");
 request.Headers.Add("Watchguard-Api-Key", api_key);
 request.Headers.Add("Authorization", "Bearer " + o.access_token);
 response = await client.SendAsync(request);
 response.EnsureSuccessStatusCode();
 
-var json_count=await response.Content.ReadAsStringAsync();
+var json_reponse=await response.Content.ReadAsStringAsync();
 
-CountResponse c = JsonConvert.DeserializeObject<CountResponse>(json_count);
+ThreatsResponse c = JsonConvert.DeserializeObject<ThreatsResponse>(json_reponse);
 Console.WriteLine("" + c.count + " Incidents found." );
 
 if (c.count > 0) {
-    //sortBy=timestamp
-    //startAfter=lastrun //if empty then do not use startAfter
+    foreach (ThreatItem item in c.items) {
+        Console.WriteLine(item.id);
 
-    //download the json of all 
-    //json to Threatsresponse?
-    
-    //for each ThreatItem    
+        foreach (KeyValuePair<string, ThreatEntity> entry in item.entities) {
+            ThreatEntity entity = entry.Value;
 
-    //for each one create an incident using - same method as the portal uses? / or do it seperate
-    //if other method as portal create incident, send a teams webhook; alerting of the new incident
+            Console.WriteLine(entity.name);
+        }
+        //for each one create an incident using - same method as the portal uses? / or do it seperate
+        //if other method as portal create incident, send a teams webhook; alerting of the new incident
 
-    //lastrun=ThreatItem.timestamp;
+        lastrun=item.timestamp;
+        break;
+    }    
 }
 
 conn.Close();
-
-//lastrun=DateTime.Now.ToString();
 
 System.IO.File.WriteAllText(lastrun_path,lastrun);
 
