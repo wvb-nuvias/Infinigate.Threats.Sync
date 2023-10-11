@@ -102,7 +102,7 @@ namespace Infinigate.Afas.Threats.Classes
             _haschanged=false;
         }
 
-        public Organisation(DataRow row) {
+        public Organisation(IDataRecord row) {
             if (row != null) {
                 _organisationid = Functions.GetInt(row[0]);
                 _name = Functions.GetString(row[1]);
