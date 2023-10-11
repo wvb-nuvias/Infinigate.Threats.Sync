@@ -41,23 +41,17 @@ namespace Infinigate.Afas.Threats.Classes
 
             if (WatchguardAccount != null) {
                 string sql = "SELECT organisationid,name FROM incidents.watchguardaccount_organisation LEFT JOIN incidents.organisations ON organisation=organisationid WHERE watchguardaccount='" + WatchguardAccount + "'";
-                //try {
-                    cmd = new(sql,conn);
-                    reader = cmd.ExecuteReader();
+                
+                cmd = new(sql,conn);
+                reader = cmd.ExecuteReader();
 
-                    if (reader.HasRows) {                        
-                        reader.Read();   
-                        
-                        org = new((IDataRecord)reader);
-                        
-                        reader.Close();
-                    }                    
-                //} catch (Exception ex) {
-                //    Console.WriteLine("GetOrganisation  : " + ex.Message);
-                //} finally {
-                //    reader = null;
-                //    cmd = null;
-                //}
+                if (reader.HasRows) {                        
+                    reader.Read();   
+                    
+                    org = new((IDataRecord)reader);
+                    
+                    reader.Close();
+                }
             }            
             
             return org.ToString();
