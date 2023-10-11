@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-//title           :Infinigate.Threats.Sync
+﻿//title           :Infinigate.Threats.Sync
 //description     :This dotnet app Syncs threats from Watchguard Cloud and creates incidents when necessary
 //author          :Wouter Vanbelleghem<wouter.vanbelleghem@infinigate.com>
 //date            :11/10/2023
@@ -114,15 +113,18 @@ if (json_token != null) {
 
             if (c.count > 0) {
                 if (c.items != null) {
+                    string org = "";
+
                     foreach (ThreatItem item in c.items) {
-                        Console.WriteLine(item.id);
+                        org = Functions.GetOrganisation(item.account,conn);                        
 
                         if (item.entities != null) {
                             foreach (KeyValuePair<string, ThreatEntity> entry in item.entities) {
                                 ThreatEntity entity = entry.Value;
                                 entity.id = entry.Key;
 
-                                Console.WriteLine(entity.id + " - " + entity.name);
+                                //TODO entity.type =endpoint, then no entity.name
+                                Console.WriteLine(org + " - " + entity.id + " - " + entity.name);
                             }
                             //for each one create an incident using - same method as the portal uses? / or do it seperate
                             //if other method as portal create incident, send a teams webhook; alerting of the new incident
