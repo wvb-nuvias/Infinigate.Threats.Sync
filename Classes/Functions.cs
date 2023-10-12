@@ -53,7 +53,7 @@ namespace Infinigate.Afas.Threats.Classes
             MySqlDataReader? reader;
 
             if (WatchguardAccount != null) {
-                string sql = "SELECT organisationid,name,address1,address2,address3,created_at,updated_at,watchguardaccount FROM incidents.watchguardaccount_organisation LEFT JOIN incidents.organisations ON organisation=organisationid WHERE watchguardaccount='" + WatchguardAccount + "'";
+                string sql = "SELECT organisationid,organisations.name,address1,address2,address3,created_at,updated_at,watchguardaccount,watchguardaccount_organisation.name as watchguardaccountname FROM incidents.watchguardaccount_organisation LEFT JOIN incidents.organisations ON organisation=organisationid WHERE watchguardaccount='" + WatchguardAccount + "'";
                 
                 cmd = new(sql,conn);
                 reader = cmd.ExecuteReader();

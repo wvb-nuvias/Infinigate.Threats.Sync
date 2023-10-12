@@ -93,6 +93,28 @@ namespace Infinigate.Afas.Threats.Classes
             }
         }
 
+        private string _watchguardaccountname="";
+        public string WatchguardAccountName {
+            get {
+                return _watchguardaccountname;
+            }
+            set {
+                _watchguardaccountname=value;
+                Changed();
+            }
+        }
+
+        private bool _watchguardaccountlink=false;
+        public bool WatchguardAccountLink {
+            get {
+                return _watchguardaccountlink;
+            }
+            set {
+                _watchguardaccountlink=value;
+                Changed();
+            }
+        }
+
         private bool _haschanged = false;
         public bool Haschanged {
             get {
@@ -117,6 +139,8 @@ namespace Infinigate.Afas.Threats.Classes
             _updated_at = DateTime.Now;
             _haschanged=false;
             _watchguardaccount = "You need to add link between organisation and watchguard account";
+            _watchguardaccountlink=false;
+            _watchguardaccountname = "Unknown";
         }
 
         public Organisation(IDataRecord row) {
@@ -129,6 +153,8 @@ namespace Infinigate.Afas.Threats.Classes
                 _created_at = Functions.GetDateTime(row[5]);
                 _updated_at = Functions.GetDateTime(row[6]);
                 _watchguardaccount = Functions.GetString(row[7]);
+                _watchguardaccountlink=true;
+                _watchguardaccountname = Functions.GetString(row[8]);
             }
             _haschanged=false;
         }

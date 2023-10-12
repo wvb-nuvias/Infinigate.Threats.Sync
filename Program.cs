@@ -94,7 +94,7 @@ if (json_token != null) {
     OAuthResponse? o = JsonConvert.DeserializeObject<OAuthResponse>(json_token);
 
     if (o != null) {
-        Console.WriteLine("Counting number of Incidents...");
+        Console.WriteLine("Parsing Threat Incidents...");
 
         request = new HttpRequestMessage(HttpMethod.Get, api_base + "threatsync/management/v1/" + api_account + "/incidents?tenants=true&sortBy=timestamp&query=threatScore:>" + min_threat_level + startAfter);
         request.Headers.Add("Accept", "application/json");
@@ -126,9 +126,13 @@ if (json_token != null) {
 
                                 if (entity.type == "firebox") tmp += " - " + entity.name;
 
-                                tmp += " [" + org.WatchguardAccount + "]";
+                                tmp += " [" + org.WatchguardAccount + " - " + org.WatchguardAccountName;
+                                if (!org.WatchguardAccountLink) {
+                                    tmp += ": " + item.account;
+                                }
+                                tmp += "]";
 
-                                Console.WriteLine(tmp);
+                                Console.WriteLine(tmp);  
                             }
                             //for each one create an incident using - same method as the portal uses? / or do it seperate
                             //if other method as portal create incident, send a teams webhook; alerting of the new incident
