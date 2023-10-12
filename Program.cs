@@ -94,6 +94,11 @@ if (json_token != null) {
     OAuthResponse? o = JsonConvert.DeserializeObject<OAuthResponse>(json_token);
 
     if (o != null) {
+        //first pull accounts via accounts Api and fill the database table - link with organisation will probably be impossible
+
+
+
+
         Console.WriteLine("Parsing Threat Incidents...");
 
         request = new HttpRequestMessage(HttpMethod.Get, api_base + "threatsync/management/v1/" + api_account + "/incidents?tenants=true&sortBy=timestamp&query=threatScore:>" + min_threat_level + startAfter);
@@ -112,7 +117,7 @@ if (json_token != null) {
 
             if (c.count > 0) {
                 if (c.items != null) {
-                    Organisation org = null;
+                    Organisation? org = null;
                     string tmp = "" ;
 
                     foreach (ThreatItem item in c.items) {
