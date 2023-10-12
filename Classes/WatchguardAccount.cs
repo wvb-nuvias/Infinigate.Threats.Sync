@@ -92,10 +92,10 @@ namespace Infinigate.Afas.Threats.Classes
         public WatchguardAccount(IDataRecord row) {
             if (row != null) {
                 _organisation = Functions.GetInt(row[1]);
-                _watchguardaccount = Functions.GetInt(row[2]);
-                _name = Functions.GetInt(row[3]);
-                _type = Functions.GetInt(row[4]);
-                _topwatchguardaccount = Functions.GetInt(row[5]);
+                _watchguardaccount = Functions.GetString(row[2]);
+                _name = Functions.GetString(row[3]);
+                _type = Functions.GetString(row[4]);
+                _topwatchguardaccount = Functions.GetString(row[5]);
                 _toporganisation = Functions.GetInt(row[6]);
             }
             _haschanged=false;

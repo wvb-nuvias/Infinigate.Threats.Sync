@@ -110,7 +110,11 @@ if (json_token != null) {
 
         if (r != null) {    
             if (r.pageControls != null) {    
-                Console.WriteLine("" + r.pageControls.totalItems + " Accounts found. Syncing...");
+                int h = 0;
+                foreach (AccountItem item in r.items) {
+                    h+=item.childrenList.Count;
+                }
+                Console.WriteLine("" + (r.pageControls.totalItems + h) + " Accounts found. Syncing...");
                 
                 List<WatchguardAccount> accounts = Functions.GetWatchguardAccounts(api_account,conn);
                 Console.WriteLine("Found " + accounts.Count + " records in MySQL table.");
