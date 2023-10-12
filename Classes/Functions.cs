@@ -69,5 +69,30 @@ namespace Infinigate.Afas.Threats.Classes
             
             return org;
         }
+
+        public static List<WatchguardAccount> GetWatchguardAccounts(string? WatchguardAccount, MySqlConnection conn) {
+            List<WatchguardAccount> wgaccounts=new();
+            WatchguardAccount wgaccount = new();
+            MySqlCommand? cmd;
+            MySqlDataReader? reader;
+
+            if (WatchguardAccount != null) {
+                string sql = "SELECT * FROM watchguardaccount_organisation ORDER BY name";
+                
+                cmd = new(sql,conn);
+                reader = cmd.ExecuteReader();
+
+                if (reader.HasRows) {                        
+                    while (reader.Read()) {
+                        wgaccount = new((IDataRecord)reader);
+                        wgaccounts.Add(wgaccount);
+                    }              
+                }
+
+                reader.Close();
+            }      
+
+            return wgaccounts;
+        }
     }
 }

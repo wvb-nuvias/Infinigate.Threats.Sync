@@ -95,11 +95,31 @@ if (json_token != null) {
 
     if (o != null) {
         //first pull accounts via accounts Api and fill the database table - link with organisation will probably be impossible
+        Console.WriteLine("Get Accounts From Watchguard Cloud...");
+
+        request = new HttpRequestMessage(HttpMethod.Get, api_base + "platform/accounts/v1/accounts/" + api_account + "/children?type=0&sortBy=name&sortOrder=asc");
+        request.Headers.Add("Accept", "application/json");
+        request.Headers.Add("Watchguard-Api-Key", api_key);
+        request.Headers.Add("Authorization", "Bearer " + o.access_token);
+        response = await client.SendAsync(request);
+        response.EnsureSuccessStatusCode();
+
+        var json_accountreponse=await response.Content.ReadAsStringAsync();
+
+        AccountsResponse? r = JsonConvert.DeserializeObject<AccountsResponse>(json_accountreponse);
+
+        if (r != null) {    
+            if (r.pageControls != null) {    
+                Console.WriteLine("" + r.pageControls.totalItems + " Accounts found. Syncing...");
+                
+                List<WatchguardAccount> accounts = Functions.GetWatchguardAccounts(api_account,conn);
+                Console.WriteLine("Found " + accounts.Count + " records in MySQL table.");
 
 
+            }
+        }
 
-
-        Console.WriteLine("Parsing Threat Incidents...");
+        Console.WriteLine("Get Threat Incidents...");
 
         request = new HttpRequestMessage(HttpMethod.Get, api_base + "threatsync/management/v1/" + api_account + "/incidents?tenants=true&sortBy=timestamp&query=threatScore:>" + min_threat_level + startAfter);
         request.Headers.Add("Accept", "application/json");
@@ -113,7 +133,7 @@ if (json_token != null) {
         ThreatsResponse? c = JsonConvert.DeserializeObject<ThreatsResponse>(json_reponse);
 
         if (c != null) {        
-            Console.WriteLine("" + c.count + " Incidents found." );
+            Console.WriteLine("" + c.count + " Threat Incidents found. Listing..." );
 
             if (c.count > 0) {
                 if (c.items != null) {
